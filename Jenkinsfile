@@ -1,4 +1,10 @@
 pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'kamel2009@gmail.com'
