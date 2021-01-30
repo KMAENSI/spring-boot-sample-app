@@ -15,12 +15,12 @@ pipeline {
                     // ** NOTE: This 'M3' Maven tool must be configured
                     // **       in the global configuration.
                     echo 'Pulling...' + env.GIT_BRANCH
-                    def mvnHome = tool 'Maven 3.5.2'
+                    
                     if (isUnix()) {
                         def targetVersion = getDevVersion()
                         print 'target build version...'
                         print targetVersion
-                        sh "'${mvnHome}/bin/mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
+                        sh "mvn -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
                         def pom = readMavenPom file: 'pom.xml'
                         // get the current development version
                         developmentArtifactVersion = "${pom.version}-${targetVersion}"
