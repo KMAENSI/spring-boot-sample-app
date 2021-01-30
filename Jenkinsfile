@@ -14,7 +14,7 @@ pipeline {
                     // Get the Maven tool.
                     // ** NOTE: This 'M3' Maven tool must be configured
                     // **       in the global configuration.
-                    echo 'Pulling...' + env.BRANCH_NAME
+                    echo 'Pulling...' + env.GIT_BRANCH
                     def mvnHome = tool 'Maven 3.5.2'
                     if (isUnix()) {
                         def targetVersion = getDevVersion()
