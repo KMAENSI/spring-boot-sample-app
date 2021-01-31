@@ -17,7 +17,9 @@ pipeline {
                     echo 'Pulling...' + env.GIT_BRANCH
                     
                     if (isUnix()) {
-                                               sh "mvn -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
+                                        
+                       def targetVersion = getDevVersion()
+                        sh "mvn -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
                                              
                     } else {
                         bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
@@ -31,5 +33,18 @@ pipeline {
             }
         }
     }
+    def getDevVersion() {
+    def gitCommit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+    def versionNumber;
+    if (gitCommit == null) {
+        versionNumber = env.BUILD_NUMBER;
+    } else {
+        versionNumber = gitCommit.take(8);
+    }
+    print 'build  versions...'
+    print versionNumber
+    return versionNumber
+}
+
    
 }
