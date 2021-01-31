@@ -19,7 +19,7 @@ pipeline {
                     if (isUnix()) {
                                         
                        def targetVersion = getDevVersion()
-                        sh "mvn -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
+                        sh "mvn -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package "
                                              
                     } else {
                         bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
