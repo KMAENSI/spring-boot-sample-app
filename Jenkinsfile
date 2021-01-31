@@ -1,6 +1,6 @@
 pipeline {
     // run on jenkins nodes tha has java 8 label
-    agent { label 'java8' }
+    agent any
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'kamel2009@gmail.com'
@@ -32,22 +32,6 @@ pipeline {
 
             }
         }
-        stage('Integration tests') {
-            // Run integration test
-            steps {
-                script {
-                    if (isUnix()) {
-                        // just to trigger the integration test without unit testing
-                        sh "mvn  verify -Dunit-tests.skip=true"
-                    } else {
-                        bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
-                    }
-
-                           }
-                           // cucumber reports collection
-                        //  cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
-                       }
-                   }
     }
 
 
