@@ -1,11 +1,6 @@
 pipeline {
     // run on jenkins nodes tha has java 8 label
-    agent {
-        docker {
-            image 'docker.io/bitnami/java:11-debian-10'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent { label 'java8' }
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'kamel2009@gmail.com'
