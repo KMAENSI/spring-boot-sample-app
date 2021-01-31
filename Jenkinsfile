@@ -32,25 +32,26 @@ pipeline {
 
             }
         }
+         stage('Integration tests') {
+                       // Run integration test
+                       steps {
+                           script {
+                               def mvnHome = tool 'Maven 3.5.2'
+                               if (isUnix()) {
+                                   // just to trigger the integration test without unit testing
+                                   sh "mvn  verify -Dunit-tests.skip=true"
+                               } else {
+                                   bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
+                               }
+
+                           }
+                           // cucumber reports collection
+                           cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
+                       }
+                   }
     }
    
-    stage('Integration tests') {
-               // Run integration test
-               steps {
-                   script {
-                       def mvnHome = tool 'Maven 3.5.2'
-                       if (isUnix()) {
-                           // just to trigger the integration test without unit testing
-                           sh "mvn  verify -Dunit-tests.skip=true"
-                       } else {
-                           bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
-                       }
 
-                   }
-                   // cucumber reports collection
-                   cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
-               }
-           }
 }
  def getDevVersion() {
     def gitCommit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
