@@ -33,7 +33,10 @@ pipeline {
             }
         }
     }
-    def getDevVersion() {
+   
+   
+}
+ def getDevVersion() {
     def gitCommit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
     def versionNumber;
     if (gitCommit == null) {
@@ -44,7 +47,4 @@ pipeline {
     print 'build  versions...'
     print versionNumber
     return versionNumber
-}
-
-   
 }
