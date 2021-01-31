@@ -18,7 +18,6 @@ pipeline {
                     
                     if (isUnix()) {
                                                sh "mvn -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
-                                               def pom = readMavenPom file: 'pom.xml'
                                              
                     } else {
                         bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
